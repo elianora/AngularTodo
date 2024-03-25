@@ -21,4 +21,8 @@ export class ViewTodosComponent implements OnInit {
   addTodo() {
     this.router.navigate(['add-todo']);
   }
+
+  updateTodo(todo: ToDo) {
+    this.todoService.updateTodo(todo).pipe(take(1)).subscribe();
+  }
 }
