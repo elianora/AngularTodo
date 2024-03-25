@@ -1,0 +1,9 @@
+<h1>Add To Do:</h1>
+<form *ngIf="addForm" [formGroup]="addForm" (submit)="addTodo($event)">
+  <div>
+    <label for="description">Description:</label>
+    <input name="description" formControlName="description" />
+  </div>
+  <button [disabled]="!addForm.valid" type="submit">Add</button>
+  <button (click)="cancel()">Cancel</button>
+</form>

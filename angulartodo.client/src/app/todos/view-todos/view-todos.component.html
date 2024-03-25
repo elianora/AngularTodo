@@ -1,0 +1,6 @@
+<h1>To Dos:</h1>
+<div *ngFor="let todo of todos$ | async">
+  <input type="checkbox" [(ngModel)]="todo.isCompleted" (ngModelChange)="updateTodo(todo)" />
+  {{ todo.description }}
+</div>
+<button (click)="addTodo()">Add</button>

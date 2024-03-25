@@ -7,12 +7,12 @@ namespace AngularTodo.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ToDoController : ControllerBase
+public class ToDosController : ControllerBase
 {
     private readonly ToDoDbContext _db;
-    private readonly ILogger<ToDoController> _logger;
+    private readonly ILogger<ToDosController> _logger;
 
-    public ToDoController(ToDoDbContext db, ILogger<ToDoController> logger)
+    public ToDosController(ToDoDbContext db, ILogger<ToDosController> logger)
     {
         _db = db;
         _logger = logger;
