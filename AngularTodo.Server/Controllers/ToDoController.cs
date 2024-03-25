@@ -19,7 +19,7 @@ public class ToDoController : ControllerBase
     }
 
     [HttpGet(Name = "GetToDos")]
-    public IEnumerable<ToDoDto> Get()
+    public IEnumerable<ToDoDto> GetToDos()
     {
         var todos = _db.ToDos.Select(todo => new ToDoDto
         {
@@ -32,7 +32,7 @@ public class ToDoController : ControllerBase
     }
 
     [HttpPost(Name = "CreateToDo")]
-    public async Task<ActionResult<ToDoDto>> Post([FromBody]ToDoDto dto)
+    public async Task<ActionResult<ToDoDto>> CreateToDo([FromBody]ToDoDto dto)
     {
         if (dto.Description is null)
         {
@@ -59,7 +59,7 @@ public class ToDoController : ControllerBase
     }
 
     [HttpPut(Name = "UpdateToDo")]
-    public async Task<IActionResult> Put([FromBody]ToDoDto dto)
+    public async Task<IActionResult> UpdateToDo([FromBody]ToDoDto dto)
     {
         if (dto.Id is null)
         {
