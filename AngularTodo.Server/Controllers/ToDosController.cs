@@ -7,29 +7,16 @@ namespace AngularTodo.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ToDosController : ControllerBase
+public class ToDosController(ToDoDbContext db) : ControllerBase
 {
-    private readonly ToDoDbContext _db;
-    private readonly ILogger<ToDosController> _logger;
-
-    public ToDosController(ToDoDbContext db, ILogger<ToDosController> logger)
-    {
-        _db = db;
-        _logger = logger;
-    }
-
     [HttpGet(Name = "GetToDos")]
-    public IEnumerable<ToDoDto> GetToDos()
-    {
-        var todos = _db.ToDos.Select(todo => new ToDoDto
+    public async Task<IEnumerable<ToDoDto>> GetToDos()
+        => await db.ToDos.Select(todo => new ToDoDto
         {
             Id = todo.Id,
             IsCompleted = todo.IsCompleted,
             Description = todo.Description
-        });
-
-        return todos.ToList();
-    }
+        }).ToListAsync();
 
     [HttpPost(Name = "CreateToDo")]
     public async Task<ActionResult<ToDoDto>> CreateToDo([FromBody]ToDoDto dto)
@@ -45,8 +32,8 @@ public class ToDosController : ControllerBase
             Description = dto.Description
         };
 
-        _db.ToDos.Add(newTodo);
-        await _db.SaveChangesAsync();
+        db.ToDos.Add(newTodo);
+        await db.SaveChangesAsync();
 
         var result = new ToDoDto
         {
@@ -71,7 +58,7 @@ public class ToDosController : ControllerBase
             return BadRequest("Description is required");
         }
 
-        var todo = await _db.ToDos.FindAsync(dto.Id);
+        var todo = await db.ToDos.FindAsync(dto.Id);
         if (todo is null)
         {
             return NotFound();
@@ -79,8 +66,8 @@ public class ToDosController : ControllerBase
 
         todo.IsCompleted = dto.IsCompleted ?? false;
         todo.Description = dto.Description;
-        _db.Entry(todo).State = EntityState.Modified;
-        await _db.SaveChangesAsync();
+        db.Entry(todo).State = EntityState.Modified;
+        await db.SaveChangesAsync();
 
         return NoContent();
     }
