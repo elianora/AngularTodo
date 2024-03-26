@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <None Remove="todos.db" />
+    <None Remove="todos.db-shm" />
+    <None Remove="todos.db-wal" />
   </ItemGroup>
 
   <ItemGroup>
