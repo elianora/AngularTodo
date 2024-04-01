@@ -66,7 +66,6 @@ public class ToDosController(ToDoDbContext db) : ControllerBase
 
         todo.IsCompleted = dto.IsCompleted ?? false;
         todo.Description = dto.Description;
-        db.Entry(todo).State = EntityState.Modified;
         await db.SaveChangesAsync();
 
         return NoContent();
